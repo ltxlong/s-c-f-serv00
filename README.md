@@ -98,6 +98,11 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 3 个 vmess
     echo '写入之后的 crontab'
     crontab -l
 
+# 效果
+    # 嗯还好，总比没有强，优选IP之后效果会好一些
+  ![image](https://github.com/user-attachments/assets/591ab29e-1272-4e97-9cd3-9f941a521c30)
+
+
 # 感谢
 serv00 Revolutionary Free Hosting: [https://www.serv00.com/offer](https://www.serv00.com/offer)  
 cloudns domain for free: [https://www.cloudns.net/](https://www.cloudns.net/)  
