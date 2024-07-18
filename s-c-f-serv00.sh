@@ -1983,7 +1983,7 @@ downloadFile() {
     wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O $FILENAME
     FILEPATH=$(tar tvf $FILENAME | grep temp/cloudflared | awk '{print $9}')
     tar zxvf $FILENAME
-    mv -fv .$FILEPATH ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared-freebsd
+    mv -fv ./$FILEPATH ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared-freebsd
     chmod -v u+x ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared-freebsd
     rm -rfv $FILENAME temp
 }
