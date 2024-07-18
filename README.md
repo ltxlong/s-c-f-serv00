@@ -36,10 +36,17 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 3 个 vmess
   ![image](https://github.com/user-attachments/assets/30c8cf5b-2e09-4274-8a4a-7594d56ed8ca)
   ![image](https://github.com/user-attachments/assets/28faccb2-9d93-4380-aa94-2dbccd46918e)
   ![image](https://github.com/user-attachments/assets/236174fe-bca5-4e5f-aaa9-6911a6367426)
+  ![image](https://github.com/user-attachments/assets/0fae9a24-ad39-4109-bc83-8f9913d098a5)
+  ![image](https://github.com/user-attachments/assets/74503d17-ff22-40f3-8e97-27c93285dbce)
+  ![image](https://github.com/user-attachments/assets/c3f3fe7b-03d5-48be-b21e-4d09c98c56b4)
+  ![image](https://github.com/user-attachments/assets/372750bf-25a1-41ee-aba2-288aaee8dcf4)
+  ![image](https://github.com/user-attachments/assets/cffb957c-4732-4716-84ba-54851410f2aa)
+  ![image](https://github.com/user-attachments/assets/b5c50375-f06c-405b-875b-5693b53d4b7f)
+
   ![image](https://github.com/user-attachments/assets/9bc788b4-50ee-4e53-b89e-85c229b2edfa)
-  ![image](https://github.com/user-attachments/assets/92c0529a-22b5-41ff-bb5e-2d1251d5ef98)
     
     # 3.进入 cloudflare network tunnel 添加一个 tunnel 得到 token 并保留 ey开头后面的字符替换到脚本 
+  ![image](https://github.com/user-attachments/assets/92c0529a-22b5-41ff-bb5e-2d1251d5ef98)
   ![image](https://github.com/user-attachments/assets/48d04cb9-cdd9-4714-a752-594adaefd9f3)
   ![image](https://github.com/user-attachments/assets/521d7fd1-5856-4ddd-8ecf-63df56ad5ddd)
   ![image](https://github.com/user-attachments/assets/32b255c1-e10d-4789-a216-0e23fa19056e)
