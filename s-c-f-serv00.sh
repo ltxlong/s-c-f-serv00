@@ -1,8 +1,28 @@
 #!/usr/bin/env bash
-
 # 起始时间
 REPORT_DATE="$(TZ=':Asia/Shanghai' date +'%Y-%m-%d %T')"
 REPORT_DATE_S="$(TZ=':Asia/Shanghai' date +%s)"
+
+# 传入端口号，赋值给 VM_PORT 请换成自己的
+VM_PORT_1='9246'
+VM_PORT_2='9247'
+VM_PORT_3='9248'
+
+# ARGO 隧道 token ，请换成自己的
+ARGO_AUTH='eyJhIjoiZDkyYTUyMDAxZDNiNWM4N2ExYzFmYzc2ZGFjZTFlMTYiLCJ0IjoiODU0MDEzNTctZGIyNy00NDExLWEwNmYtYjVkMTU5YThmODlmIiwicyI6IlpUZGlabVpoT1RndFlUYzBNaTAwTXpnMUxXSmtaRFV0TkRKa09HRmtZMkUyTlRNNCJ9'
+
+# 从 cloudflared-freebsd 日志中获得遂穿域名，请换成自己的
+# vmess 域名
+CLOUDFLARED_DOMAIN_VM_1='serv00-one.fine.dns-dynamic.net'
+CLOUDFLARED_DOMAIN_VM_2='serv00-two.fine.dns-dynamic.net'
+CLOUDFLARED_DOMAIN_VM_3='serv00-three.fine.dns-dynamic.net'
+
+# 优选域名
+# 可以提前本地测速自定义修改优选域名或IP可能会起到加速作用
+VM_WEBSITE=cloudflare.182682.xyz
+
+# 优选域名或IP端口
+CLOUDFLARED_PORT_VM=443
 
 echo 本脚本会占用3个tcp端口，如果有需求，可以自己爆改
 
@@ -18,20 +38,6 @@ devil port list
 # 创建进入自定义目录
 rm -rfv ${HOME}/s-c-f-serv00-*
 mkdir -pv ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/ ; cd ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/
-
-# 传入端口号，赋值给 VM_PORT 请换成自己的
-VM_PORT_1='9246'
-VM_PORT_2='9247'
-VM_PORT_3='9248'
-
-# ARGO 隧道 token ，请换成自己的
-ARGO_AUTH='eyJhIjoiZDkyYTUyMDAxZDNiNWM4N2ExYzFmYzc2ZGFjZTFlMTYiLCJ0IjoiODU0MDEzNTctZGIyNy00NDExLWEwNmYtYjVkMTU5YThmODlmIiwicyI6IlpUZGlabVpoT1RndFlUYzBNaTAwTXpnMUxXSmtaRFV0TkRKa09HRmtZMkUyTlRNNCJ9'
-
-# 从 cloudflared-freebsd 日志中获得遂穿域名，请换成自己的
-# vmess 域名
-CLOUDFLARED_DOMAIN_VM_1='serv00-one.fine.dns-dynamic.net'
-CLOUDFLARED_DOMAIN_VM_2='serv00-two.fine.dns-dynamic.net'
-CLOUDFLARED_DOMAIN_VM_3='serv00-three.fine.dns-dynamic.net'
 
 # 生成服务器配置 启动进程 生成客户端配置
 makeAndrun() {
@@ -156,12 +162,6 @@ UiLgNoD-lIaMtOh
     SB_VM_PROTOCOL_OUT_TAG_1=$VM_PROTOCOL-out-1
     SB_VM_PROTOCOL_OUT_TAG_2=$VM_PROTOCOL-out-2
     SB_VM_PROTOCOL_OUT_TAG_3=$VM_PROTOCOL-out-3
-
-    # 优选域名，自定义优选域名或IP可能会起到加速作用
-    VM_WEBSITE=cloudflare.182682.xyz
-
-    # 优选域名或IP端口
-    CLOUDFLARED_PORT_VM=443
 
     # 浏览器
     BROWSER=chrome
