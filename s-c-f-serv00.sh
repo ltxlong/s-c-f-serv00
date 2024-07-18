@@ -137,9 +137,9 @@ makeAndrun() {
 UiLgNoD-lIaMtOh
 
     # 启动 sing-box-freebsd 服务
-    nohup ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd run -c ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/config.json > ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd.log 2>&1 & disown
+    nohup ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd run -c ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/config.json > ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box.log 2>&1 & disown
     # 后台启用 cloudflared-freebsd 获得隧穿日志并脱离 shell 终端寿命
-    nohup ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared-freebsd tunnel --edge-ip-version auto --protocol http2 run --token $ARGO_AUTH > ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared-freebsd.log 2>&1 & disown
+    nohup ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared-freebsd tunnel --edge-ip-version auto --protocol http2 run --token $ARGO_AUTH > ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/cloudflared.log 2>&1 & disown
 
     # 睡 5 秒，让 cloudflared-freebsd 充分运行
     sleep 5
@@ -1138,8 +1138,8 @@ rules:
 - MATCH,Proxy
 UiLgNoD-lIaMtOh
 
-    # 写入 sing-box-freebsd 客户端配置到 client-sing-box-freebsd-config.json 文件
-    cat <<UiLgNoD-lIaMtOh | tee ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-freebsd-config.json >/dev/null
+    # 写入 sing-box-freebsd 客户端配置到 client-sing-box-config.json 文件
+    cat <<UiLgNoD-lIaMtOh | tee ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-config.json >/dev/null
 {
   "log": {
     "level": "debug",
@@ -1945,9 +1945,9 @@ $VMESS_LINK_2
 $VMESS_LINK_3
 
 # 执行完成，如果可以请通过 scp 获取客户端配置到本地
-# 本地sing-box客户端配置文件位置 ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-freebsd-config.json
+# 本地sing-box客户端配置文件位置 ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-config.json
 # 用于 sing-box 客户端配置文件拉取到本地 . 的命令如下
-scp -P 22 $USERNAME@$HOSTNAME_DOMAIN:${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-freebsd-config.json .
+scp -P 22 $USERNAME@$HOSTNAME_DOMAIN:${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-config.json .
 
 # 本地 mihomo 或 nekobox 等客户端配置文件配置文件位置 ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-nekobox-config.yaml
 # 用于 mihomo 或 nekobox 等客户端配置文件拉取到本地 . 的命令如下
