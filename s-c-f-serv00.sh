@@ -1969,7 +1969,8 @@ downloadFile() {
     rm -rfv $FILENAME usr
 
     # 下载官方 cloundflare https://freebsd.pkgs.org/14/freebsd-amd64/cloudflared-2023.10.0_2.pkg.html
-    URI="https://pkg.freebsd.org/FreeBSD:14:amd64/latest/All/cloudflared-2023.10.0_2.pkg"
+    # 非官方 https://cloudflared.bowring.uk/binaries/cloudflared-freebsd-latest.7z
+    URI="https://cloudflared.bowring.uk/binaries/cloudflared-freebsd-latest.7z"
     FILENAME=$(basename $URI)
     wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O $FILENAME
     FILEPATH=$(tar tvf $FILENAME | grep bin/cloudflared | awk '{print $9}')
