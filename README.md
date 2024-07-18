@@ -102,6 +102,23 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 3 个 vmess
     # 嗯还好，总比没有强，优选IP之后效果会好一些
   ![image](https://github.com/user-attachments/assets/591ab29e-1272-4e97-9cd3-9f941a521c30)
 
+# 注意
+    ！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
+    # 有时候？忽然连不上了
+    # 有可能 serv00 服务器重新启动了导致 uuid 自动改变了
+    # 可以进入服务器执行以下命令查看重启后新生成的配置文件信息
+    cat ${HOME}/s-c-f-serv00-*/result.txt
+    
+    # 当然也有可能重启后也可能根本没有启动，那就手动执行脚本吧？
+    bash s-c-f-serv00.sh
+    
+    # 什么执行脚本都不行连不上？啊，那替换优选IP试试？
+    
+    # 啊？什么什么还是不行？啊好烦啊，唉，我尽力了。。。
+    ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+# 声明
+本项目仅作学习交流使用，用于查找资料，学习知识，不做任何违法行为。所有资源均来自互联网，仅供大家交流学习使用，出现违法问题概不负责。
 
 # 感谢
 serv00 Revolutionary Free Hosting: [https://www.serv00.com/offer](https://www.serv00.com/offer)  
