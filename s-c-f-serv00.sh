@@ -84,7 +84,7 @@ makeAndrun() {
       "transport": {
         "type": "$VMV_TYPE",
         "path": "$VM_PATH_1",
-        "max_early_data": 2048,
+        "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       }
     },
@@ -104,7 +104,7 @@ makeAndrun() {
       "transport": {
         "type": "$VMV_TYPE",
         "path": "$VM_PATH_2",
-        "max_early_data": 2048,
+        "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       }
     },
@@ -124,7 +124,7 @@ makeAndrun() {
       "transport": {
         "type": "$VMV_TYPE",
         "path": "$VM_PATH_3",
-        "max_early_data": 2048,
+        "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       }
     }
@@ -167,9 +167,9 @@ UiLgNoD-lIaMtOh
     BROWSER=chrome
 
     # VMESS 链接
-    VMESS_LINK_1='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_1'","id":"'$VM_UUID_1'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_1'?ed\u003d2048","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_1'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_1'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
-    VMESS_LINK_2='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_2'","id":"'$VM_UUID_2'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_2'?ed\u003d2048","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_2'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_2'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
-    VMESS_LINK_3='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_3'","id":"'$VM_UUID_3'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_3'?ed\u003d2048","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_3'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_3'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
+    VMESS_LINK_1='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_1'","id":"'$VM_UUID_1'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_1'?ed\u003d2560","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_1'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_1'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
+    VMESS_LINK_2='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_2'","id":"'$VM_UUID_2'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_2'?ed\u003d2560","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_2'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_2'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
+    VMESS_LINK_3='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_3'","id":"'$VM_UUID_3'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_3'?ed\u003d2560","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_3'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_3'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
 
 
     # 写入 nekobox 客户端配置到 client-nekobox-config.yaml 文件
@@ -193,9 +193,9 @@ dns:
      - https://1.1.1.1/dns-query
      - tls://1.0.0.1:853
 proxies:
-  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_1","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_1","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_1","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_1?ed=2048","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_1"}}}
-  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_2","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_2","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_2","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_2?ed=2048","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_2"}}}
-  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_3","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_3","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_3","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_3?ed=2048","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_3"}}}
+  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_1","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_1","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_1","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_1?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_1"}}}
+  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_2","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_2","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_2","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_2?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_2"}}}
+  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_3","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_3","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_3","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_3?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_3"}}}
 proxy-groups:
   - name: Auto-Fast
     type: "url-test"
@@ -1433,7 +1433,7 @@ UiLgNoD-lIaMtOh
         },
         "path": "$VM_PATH_1",
         "type": "$VMV_TYPE",
-        "max_early_data": 2048,
+        "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       },
       "type": "$VM_PROTOCOL",
@@ -1462,7 +1462,7 @@ UiLgNoD-lIaMtOh
         },
         "path": "$VM_PATH_2",
         "type": "$VMV_TYPE",
-        "max_early_data": 2048,
+        "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       },
       "type": "$VM_PROTOCOL",
@@ -1491,7 +1491,7 @@ UiLgNoD-lIaMtOh
         },
         "path": "$VM_PATH_3",
         "type": "$VMV_TYPE",
-        "max_early_data": 2048,
+        "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       },
       "type": "$VM_PROTOCOL",
