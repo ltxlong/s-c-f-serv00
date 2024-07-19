@@ -1960,7 +1960,7 @@ UiLgNoD-lIaMtOh
 
 # 下载 sing-box-freebsd cloudflared-freebsd 配置并启用
 downloadFile() {
-    # 下载官方 sing-box https://freebsd.pkgs.org/14/freebsd-amd64/sing-box-1.9.3.pkg.html
+    # 下载 freebsd 社区 yuri@FreeBSD.org sing-box 包 sing-box https://freebsd.pkgs.org/14/freebsd-amd64/sing-box-1.9.3.pkg.html
     #URI="https://pkg.freebsd.org/FreeBSD:14:amd64/latest/All/sing-box-1.9.3.pkg"
     #FILENAME=$(basename $URI)
     #wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O $FILENAME
