@@ -1929,35 +1929,33 @@ UiLgNoD-lIaMtOh
 UiLgNoD-lIaMtOh
     # 写入 result.txt
     cat <<UiLgNoD-lIaMtOh | tee -a ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/result.txt >/dev/null
-！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
-# 有时候？忽然连不上了
-# 执行以下命令查看进程是否启动？
-# sing-box-freebsd 进程
-ps -ef | grep -v grep | grep sing-box-freebsd
-# cloudflared-freebsd 进程
-ps -ef | grep -v grep | cloudflared-freebsd
-# 查看一下日志是否有可用信息？
-# sing-box-freebsd 日志
-tail -f -n 200 ${HOME}/s-c-f-serv00-*/sing-box.log
-# cloudflared-freebsd 日志
-tail -f -n 200 ${HOME}/s-c-f-serv00-*/cloudflared.log
-
-# 如果一切正常有可能 serv00 服务器重新启动了导致 uuid 自动改变了
-# 可以执行以下命令查看重启后新生成的配置文件信息
-cat ${HOME}/s-c-f-serv00-*/result.txt
-
-# 当然也有可能重启后也可能根本没有启动，那就手动执行脚本吧？
-bash s-c-f-serv00.sh
-
-# 什么执行脚本都不行连不上？啊，那替换优选IP试试？
-
-# 什么什么还是不行吗？啊？那那你看看边缘证书绿了没有啊？
-
-# 啊？什么什么还是不行？啊好烦啊，唉，我尽力了。。。
-！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-# 本脚本执行耗时:
-"$REPORT_DATE ---> $F_DATE" "Total:$[ $F_DATE_S - $REPORT_DATE_S ] seconds"
+    ！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
+    # 有时候？忽然连不上了
+    # 执行以下命令查看进程是否启动？
+    # sing-box-freebsd 进程
+    ps -ef | grep -v grep | grep sing-box-freebsd
+    # cloudflared-freebsd 进程
+    ps -ef | grep -v grep | cloudflared-freebsd
+    
+    # 查看一下日志是否有可用信息？
+    # sing-box-freebsd 日志
+    tail -f -n 200 ${HOME}/s-c-f-serv00-*/sing-box.log
+    # cloudflared-freebsd 日志
+    tail -f -n 200 ${HOME}/s-c-f-serv00-*/cloudflared.log
+    
+    # 如果一切正常有可能 serv00 服务器重新启动了导致 uuid 自动改变了
+    # 可以执行以下命令查看重启后新生成的配置文件信息
+    cat ${HOME}/s-c-f-serv00-*/result.txt
+    
+    # 当然也有可能重启后也可能根本没有启动，那就手动执行脚本吧？
+    bash s-c-f-serv00.sh
+    
+    # 什么执行脚本都不行连不上？啊，那替换优选IP试试？
+    
+    # 什么什么还是不行吗？啊？那那你看看边缘证书绿了没有啊？
+    
+    # 啊？什么什么还是不行？啊好烦啊，唉，我尽力了。。。
+    ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
 
 # 自定义客户端配置中的优选域名或IP和端口可能会起到加速作用
 # 当前客户端配置中的的优选域名为 $VM_WEBSITE 优选域名或IP端口为 $CLOUDFLARED_PORT_VM
@@ -1982,6 +1980,9 @@ scp -P 22 $USERNAME@$HOSTNAME_DOMAIN:${HOME}/s-c-f-serv00-${REPORT_DATE_S}/clien
 # 本地 mihomo 或 nekobox 等客户端配置文件配置文件位置 ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-nekobox-config.yaml
 # 用于 mihomo 或 nekobox 等客户端配置文件拉取到本地 . 的命令如下
 scp -P 22 $USERNAME@$HOSTNAME_DOMAIN:${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-nekobox-config.yaml .
+
+# 本脚本执行耗时:
+"$REPORT_DATE ---> $F_DATE" "Total:$[ $F_DATE_S - $REPORT_DATE_S ] seconds"
 
 UiLgNoD-lIaMtOh
 }
