@@ -100,7 +100,7 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 vless(cloudflare) + v
 
 # 效果
     # 嗯还好，总比没有强，优选IP之后效果会好一些
-  ![image](https://github.com/user-attachments/assets/591ab29e-1272-4e97-9cd3-9f941a521c30)
+  ![image](https://github.com/user-attachments/assets/ca03f267-69be-4106-9fdc-6efa1536a8f4)
 
 # 注意
     ！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
