@@ -1,5 +1,5 @@
 # s-c-f-serv00
-sing-box + cloudflare + freebsd 支持在 serv00 上搭建 3 个 vmess
+sing-box + cloudflare + freebsd 支持在 serv00 上搭建 vless(cloudflare) + vmess(cloudflare) + trojan(cloudflare) 3 个节点
 这个脚本会占用 3 个 tcp 端口，如果有其他需求你可以自行爆改本脚本
 
 # clone 本脚本到 serv00 服务器
@@ -105,15 +105,27 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 3 个 vmess
 # 注意
     ！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
     # 有时候？忽然连不上了
-    # 有可能 serv00 服务器重新启动了导致 uuid 自动改变了
-    # 可以进入服务器执行以下命令查看重启后新生成的配置文件信息
+    # 执行以下命令查看进程是否启动？
+    # sing-box-freebsd 进程
+    ps -ef | grep -v grep | grep sing-box-freebsd
+    # cloudflared-freebsd 进程
+    ps -ef | grep -v grep | cloudflared-freebsd
+    
+    # 查看一下日志是否有可用信息？
+    # sing-box-freebsd 日志
+    tail -f -n 200 ${HOME}/s-c-f-serv00-*/sing-box.log
+    # cloudflared-freebsd 日志
+    tail -f -n 200 ${HOME}/s-c-f-serv00-*/cloudflared.log
+    
+    # 如果一切正常有可能 serv00 服务器重新启动了导致 uuid 自动改变了
+    # 可以执行以下命令查看重启后新生成的配置文件信息
     cat ${HOME}/s-c-f-serv00-*/result.txt
     
     # 当然也有可能重启后也可能根本没有启动，那就手动执行脚本吧？
     bash s-c-f-serv00.sh
     
     # 什么执行脚本都不行连不上？啊，那替换优选IP试试？
-
+    
     # 什么什么还是不行吗？啊？那那你看看边缘证书绿了没有啊？
     
     # 啊？什么什么还是不行？啊好烦啊，唉，我尽力了。。。
