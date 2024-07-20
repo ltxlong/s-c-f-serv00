@@ -3,26 +3,41 @@
 REPORT_DATE="$(TZ=':Asia/Shanghai' date +'%Y-%m-%d %T')"
 REPORT_DATE_S="$(TZ=':Asia/Shanghai' date +%s)"
 
-# 传入端口号，赋值给 VM_PORT 请换成自己的
-VM_PORT_1='9246'
+# 传入端口号，赋值给 PORT 请换成自己的
+# vless port
+V_PORT_1='9246'
+# vmess port
 VM_PORT_2='9247'
-VM_PORT_3='9248'
+# trojan port
+T_PORT_3='9248'
 
 # ARGO 隧道 token ，请换成自己的
 ARGO_AUTH='eyJhIjoiZDkyYTUyMDAxZDNiNWM4N2ExYzFmYzc2ZGFjZTFlMTYiLCJ0IjoiODU0MDEzNTctZGIyNy00NDExLWEwNmYtYjVkMTU5YThmODlmIiwicyI6IlpUZGlabVpoT1RndFlUYzBNaTAwTXpnMUxXSmtaRFV0TkRKa09HRmtZMkUyTlRNNCJ9'
 
 # 从 cloudflared-freebsd 日志中获得遂穿域名，请换成自己的
+# vless 域名
+CLOUDFLARED_DOMAIN_V_1='serv00-one.fine.dns-dynamic.net'
 # vmess 域名
-CLOUDFLARED_DOMAIN_VM_1='serv00-one.fine.dns-dynamic.net'
 CLOUDFLARED_DOMAIN_VM_2='serv00-two.fine.dns-dynamic.net'
-CLOUDFLARED_DOMAIN_VM_3='serv00-three.fine.dns-dynamic.net'
+# trojan 域名
+CLOUDFLARED_DOMAIN_T_3='serv00-three.fine.dns-dynamic.net'
 
 # 优选域名
 # 可以提前本地测速自定义修改优选域名或IP可能会起到加速作用
+# vless
+V_WEBSITE=cloudflare.182682.xyz
+# vmess
 VM_WEBSITE=cloudflare.182682.xyz
+# trojan
+T_WEBSITE=cloudflare.182682.xyz
 
 # 优选域名或IP端口
+# vless
+CLOUDFLARED_PORT_V=443
+# vmess
 CLOUDFLARED_PORT_VM=443
+# trojan
+CLOUDFLARED_PORT_T=443
 
 echo 本脚本会占用3个tcp端口，如果有需求，可以自己爆改
 
@@ -42,23 +57,28 @@ mkdir -pv ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/ ; cd ${HOME}/s-c-f-serv00-${REP
 # 生成服务器配置 启动进程 生成客户端配置
 makeAndrun() {
     # sing-box-freebsd 服务器配置所需变量
-    # vmess 配置所需变量
-    # vmess 协议
+    # 配置所需变量
+    # 协议
+    V_PROTOCOL=vless
     VM_PROTOCOL=vmess
-    # vmess 入站名
-    VM_PROTOCOL_IN_TAG_1=$VM_PROTOCOL-in-1
+    T_PROTOCOL=trojan
+    # 入站名
+    V_PROTOCOL_IN_TAG_1=$V_PROTOCOL-in-1
     VM_PROTOCOL_IN_TAG_2=$VM_PROTOCOL-in-2
-    VM_PROTOCOL_IN_TAG_3=$VM_PROTOCOL-in-3
+    T_PROTOCOL_IN_TAG_3=$T_PROTOCOL-in-3
     # sing-box-freebsd 生成 uuid
-    VM_UUID_1="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate uuid)"
+    V_UUID_1="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate uuid)"
     VM_UUID_2="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate uuid)"
-    VM_UUID_3="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate uuid)"
-    # vmess V2Ray传输层类型
+    T_UUID_3="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate uuid)"
+    # V2Ray传输层类型
+    VV_TYPE=ws
     VMV_TYPE=ws
+    T_TYPE=ws
     # sing-box-freebsd 生成 12 位 vmess hex 路径
-    VM_PATH_1="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate rand --hex 6)"
+    V_PATH_1="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate rand --hex 6)"
     VM_PATH_2="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate rand --hex 6)"
-    VM_PATH_3="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate rand --hex 6)"
+    T_PATH_3="$(${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd generate rand --hex 6)"
+
     # 写入服务器端 sing-box-freebsd 配置文件
     cat <<UiLgNoD-lIaMtOh | tee ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/config.json >/dev/null
 {
@@ -71,19 +91,19 @@ makeAndrun() {
     {
       "sniff": true,
       "sniff_override_destination": true,
-      "type": "$VM_PROTOCOL",
-      "tag": "$VM_PROTOCOL_IN_TAG_1",
+      "type": "$V_PROTOCOL",
+      "tag": "$V_PROTOCOL_IN_TAG_1",
       "listen": "::",
-      "listen_port": $VM_PORT_1,
+      "listen_port": $V_PORT_1,
       "users": [
         {
-          "uuid": "$VM_UUID_1",
-          "alterId": 0
+          "uuid": "$V_UUID_1",
+          "flow": ""
         }
       ],
       "transport": {
-        "type": "$VMV_TYPE",
-        "path": "$VM_PATH_1",
+        "type": "$VV_TYPE",
+        "path": "$V_PATH_1",
         "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       }
@@ -111,19 +131,18 @@ makeAndrun() {
     {
       "sniff": true,
       "sniff_override_destination": true,
-      "type": "$VM_PROTOCOL",
-      "tag": "$VM_PROTOCOL_IN_TAG_3",
+      "type": "$T_PROTOCOL",
+      "tag": "$T_PROTOCOL_IN_TAG_3",
       "listen": "::",
-      "listen_port": $VM_PORT_3,
+      "listen_port": $T_PORT_3,
       "users": [
         {
-          "uuid": "$VM_UUID_3",
-          "alterId": 0
+          "password": "$T_UUID_3"
         }
       ],
       "transport": {
-        "type": "$VMV_TYPE",
-        "path": "$VM_PATH_3",
+        "type": "$T_TYPE",
+        "path": "$T_PATH_3",
         "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
       }
@@ -158,19 +177,20 @@ UiLgNoD-lIaMtOh
     # 组
     SB_ALL_PROTOCOL_OUT_GROUP_TAG=sing-box-freebsd
 
+    # vless 出站名
+    SB_V_PROTOCOL_OUT_TAG_1=$V_PROTOCOL-out-1
     # vmess 出站名
-    SB_VM_PROTOCOL_OUT_TAG_1=$VM_PROTOCOL-out-1
     SB_VM_PROTOCOL_OUT_TAG_2=$VM_PROTOCOL-out-2
-    SB_VM_PROTOCOL_OUT_TAG_3=$VM_PROTOCOL-out-3
+    # trojan 出站名
+    SB_T_PROTOCOL_OUT_TAG_3=$T_PROTOCOL-out-3
 
     # 浏览器
     BROWSER=chrome
 
-    # VMESS 链接
-    VMESS_LINK_1='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_1'","id":"'$VM_UUID_1'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_1'?ed\u003d2560","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_1'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_1'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
+    # 节点链接
+    VLESS_LINK_1="vless://$V_UUID_1@$V_WEBSITE:$CLOUDFLARED_PORT_V?encryption=none&security=tls&sni=$CLOUDFLARED_DOMAIN_V_1&fp=$BROWSER&type=$VV_TYPE&host=$CLOUDFLARED_DOMAIN_V_1&path=%2F$V_PATH_1%3Fed%3D2506#$SB_V_PROTOCOL_OUT_TAG_1"
     VMESS_LINK_2='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_2'","id":"'$VM_UUID_2'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_2'?ed\u003d2560","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_2'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_2'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
-    VMESS_LINK_3='vmess://'$(echo '{"add":"'$VM_WEBSITE'","aid":"0","alpn":"","fp":"'$BROWSER'","host":"'$CLOUDFLARED_DOMAIN_VM_3'","id":"'$VM_UUID_3'","net":"'$VMV_TYPE'","path":"/'$VM_PATH_3'?ed\u003d2560","port":"'$CLOUDFLARED_PORT_VM'","ps":"'$SB_VM_PROTOCOL_OUT_TAG_3'","scy":"auto","sni":"'$CLOUDFLARED_DOMAIN_VM_3'","tls":"tls","type":"","v":"2"}' | base64 -w 0)
-
+    TROJAN_LINK_3="trojan://$T_UUID_3@$T_WEBSITE:$CLOUDFLARED_PORT_T?security=tls&sni=$CLOUDFLARED_DOMAIN_T_3&fp=$BROWSER&type=ws&host=$CLOUDFLARED_DOMAIN_T_3&path=%2F$T_PATH_3%3Fed%3D2560#$SB_T_PROTOCOL_OUT_TAG_3"
 
     # 写入 nekobox 客户端配置到 client-nekobox-config.yaml 文件
     cat <<UiLgNoD-lIaMtOh | tee ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-nekobox-config.yaml >/dev/null
@@ -193,9 +213,9 @@ dns:
      - https://1.1.1.1/dns-query
      - tls://1.0.0.1:853
 proxies:
-  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_1","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_1","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_1","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_1?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_1"}}}
+  - {"name": "$SB_V_PROTOCOL_OUT_TAG_1","type": "$V_PROTOCOL","server": "$V_WEBSITE","port": $CLOUDFLARED_PORT_V,"uuid": "$V_UUID_1","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_V_1","network": "$VV_TYPE","ws-opts": {"path": "/$V_PATH_1?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_V_1"}}}
   - {"name": "$SB_VM_PROTOCOL_OUT_TAG_2","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_2","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_2","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_2?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_2"}}}
-  - {"name": "$SB_VM_PROTOCOL_OUT_TAG_3","type": "$VM_PROTOCOL","server": "$VM_WEBSITE","port": $CLOUDFLARED_PORT_VM,"uuid": "$VM_UUID_3","alterId": 0,"cipher": "auto","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_VM_3","network": "$VMV_TYPE","ws-opts": {"path": "/$VM_PATH_3?ed=2560","headers": {"Host": "$CLOUDFLARED_DOMAIN_VM_3"}}}
+  - {"name": "$SB_T_PROTOCOL_OUT_TAG_3","type": "$T_PROTOCOL","server": "$T_WEBSITE","port": $CLOUDFLARED_PORT_T,"password": "$T_UUID_3","sni": "$CLOUDFLARED_DOMAIN_T_3","udp": true,"tls": true,"client-fingerprint": "$BROWSER","skip-cert-verify": true,"servername": "$CLOUDFLARED_DOMAIN_T_3","network": "$T_TYPE","ws-opts": {"path": "/$T_PATH_3?ed=2560"}}
 proxy-groups:
   - name: Auto-Fast
     type: "url-test"
@@ -203,27 +223,27 @@ proxy-groups:
     interval: 120
     tolerance: 40
     proxies:
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
   - name: Auto-Edge
     type: "url-test"
     url: "http://www.gstatic.cn/generate_204"
     interval: 600
     tolerance: 50
     proxies:
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
   - name: Auto-Failover
     type: "url-test"
     url: "http://www.gstatic.cn/generate_204"
     interval: 300
     tolerance: 30
     proxies:
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
   - name: Express
     type: "fallback"
     url: "http://www.gstatic.cn/generate_204"
@@ -245,26 +265,26 @@ proxy-groups:
     type: "select"
     proxies:
         - "Auto"
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
   - name: Video
     type: "select"
     interval: 900
     url: "http://www.gstatic.cn/generate_204"
     proxies:
         - Express
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
   - name: Netflix
     type: "select"
     url: "http://www.gstatic.cn/generate_204"
     interval: 1200
     proxies:
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
         - Auto-Edge
         - DIRECT
   - name: Scholar
@@ -273,17 +293,17 @@ proxy-groups:
     interval: 300
     tolerance: 40
     proxies:
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
         - Proxy
         - DIRECT
   - name: Steam
     type: "select"
     proxies:
-        - "$SB_VM_PROTOCOL_OUT_TAG_1"
+        - "$SB_V_PROTOCOL_OUT_TAG_1"
         - "$SB_VM_PROTOCOL_OUT_TAG_2"
-        - "$SB_VM_PROTOCOL_OUT_TAG_3"
+        - "$SB_T_PROTOCOL_OUT_TAG_3"
         - Auto-Edge
         - DIRECT
 
@@ -1212,7 +1232,7 @@ UiLgNoD-lIaMtOh
     {
       "type": "http",
       "tag": "http-in",
-      "listen": "0.0.0.0",
+      "listen": "::",
       "listen_port": 7897,
       "sniff": true,
       "sniff_override_destination": true,
@@ -1221,7 +1241,7 @@ UiLgNoD-lIaMtOh
     {
       "type": "socks",
       "tag": "socks-in",
-      "listen": "0.0.0.0",
+      "listen": "::",
       "listen_port": 7898,
       "sniff": true,
       "sniff_override_destination": true,
@@ -1230,7 +1250,7 @@ UiLgNoD-lIaMtOh
     {
       "type": "mixed",
       "tag": "mixed-in",
-      "listen": "0.0.0.0",
+      "listen": "::",
       "listen_port": 7899,
       "sniff": true,
       "sniff_override_destination": true,
@@ -1382,9 +1402,9 @@ UiLgNoD-lIaMtOh
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "$SB_VM_PROTOCOL_OUT_TAG_1",
+        "$SB_V_PROTOCOL_OUT_TAG_1",
         "$SB_VM_PROTOCOL_OUT_TAG_2",
-        "$SB_VM_PROTOCOL_OUT_TAG_3"
+        "$SB_T_PROTOCOL_OUT_TAG_3"
       ],
       "url": "http://www.gstatic.com/generate_204",
       "interval": "10m0s",
@@ -1394,9 +1414,9 @@ UiLgNoD-lIaMtOh
       "type": "selector",
       "tag": "$SB_ALL_PROTOCOL_OUT_GROUP_TAG",
       "outbounds": [
-        "$SB_VM_PROTOCOL_OUT_TAG_1",
+        "$SB_V_PROTOCOL_OUT_TAG_1",
         "$SB_VM_PROTOCOL_OUT_TAG_2",
-        "$SB_VM_PROTOCOL_OUT_TAG_3"
+        "$SB_T_PROTOCOL_OUT_TAG_3"
       ]
     },
     {
@@ -1412,38 +1432,40 @@ UiLgNoD-lIaMtOh
       "tag": "block"
     },
     {
-      "server": "$VM_WEBSITE",
-      "server_port": $CLOUDFLARED_PORT_VM,
-      "tag": "$SB_VM_PROTOCOL_OUT_TAG_1",
+      "type": "$V_PROTOCOL",
+      "tag": "$SB_V_PROTOCOL_OUT_TAG_1",
+      "server": "$V_WEBSITE",
+      "server_port": $CLOUDFLARED_PORT_V,
+      "uuid": "$V_UUID_1",
+      "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "$CLOUDFLARED_DOMAIN_VM_1",
-        "insecure": true,
+        "server_name": "$CLOUDFLARED_DOMAIN_V_1",
         "utls": {
           "enabled": true,
           "fingerprint": "$BROWSER"
         }
       },
-      "packet_encoding": "packetaddr",
       "transport": {
         "headers": {
           "Host": [
-            "$CLOUDFLARED_DOMAIN_VM_1"
+            "$CLOUDFLARED_DOMAIN_V_1"
           ]
         },
-        "path": "$VM_PATH_1",
-        "type": "$VMV_TYPE",
+        "path": "$V_PATH_1",
+        "type": "$VV_TYPE",
         "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
-      },
-      "type": "$VM_PROTOCOL",
-      "security": "auto",
-      "uuid": "$VM_UUID_1"
+      }
     },
     {
+      "type": "$VM_PROTOCOL",
+      "tag": "$SB_VM_PROTOCOL_OUT_TAG_2",
       "server": "$VM_WEBSITE",
       "server_port": $CLOUDFLARED_PORT_VM,
-      "tag": "$SB_VM_PROTOCOL_OUT_TAG_2",
+      "security": "auto",
+      "uuid": "$VM_UUID_2",
+      "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
         "server_name": "$CLOUDFLARED_DOMAIN_VM_2",
@@ -1453,7 +1475,6 @@ UiLgNoD-lIaMtOh
           "fingerprint": "$BROWSER"
         }
       },
-      "packet_encoding": "packetaddr",
       "transport": {
         "headers": {
           "Host": [
@@ -1464,39 +1485,35 @@ UiLgNoD-lIaMtOh
         "type": "$VMV_TYPE",
         "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
-      },
-      "type": "$VM_PROTOCOL",
-      "security": "auto",
-      "uuid": "$VM_UUID_2"
+      }
     },
     {
-      "server": "$VM_WEBSITE",
+      "type": "$T_PROTOCOL",
+      "tag": "$SB_T_PROTOCOL_OUT_TAG_3",
+      "server": "$T_WEBSITE",
       "server_port": $CLOUDFLARED_PORT_VM,
-      "tag": "$SB_VM_PROTOCOL_OUT_TAG_3",
+      "password": "$T_UUID_3",
+      "network": "udp",
       "tls": {
         "enabled": true,
-        "server_name": "$CLOUDFLARED_DOMAIN_VM_3",
+        "server_name": "$CLOUDFLARED_DOMAIN_T_3",
         "insecure": true,
         "utls": {
           "enabled": true,
           "fingerprint": "$BROWSER"
         }
       },
-      "packet_encoding": "packetaddr",
       "transport": {
         "headers": {
           "Host": [
-            "$CLOUDFLARED_DOMAIN_VM_3"
+            "$CLOUDFLARED_DOMAIN_T_3"
           ]
         },
-        "path": "$VM_PATH_3",
+        "path": "$T_PATH_3",
         "type": "$VMV_TYPE",
         "max_early_data": 2560,
         "early_data_header_name": "Sec-WebSocket-Protocol"
-      },
-      "type": "$VM_PROTOCOL",
-      "security": "auto",
-      "uuid": "$VM_UUID_3"
+      }
     }
   ],
   "route": {
@@ -1914,8 +1931,19 @@ UiLgNoD-lIaMtOh
     cat <<UiLgNoD-lIaMtOh | tee -a ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/result.txt >/dev/null
 ！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
 # 有时候？忽然连不上了
-# 有可能 serv00 服务器重新启动了导致 uuid 自动改变了
-# 可以进入服务器执行以下命令查看重启后新生成的配置文件信息
+# 执行以下命令查看进程是否启动？
+# sing-box-freebsd 进程
+ps -ef | grep -v grep | grep sing-box-freebsd
+# cloudflared-freebsd 进程
+ps -ef | grep -v grep | cloudflared-freebsd
+# 查看一下日志是否有可用信息？
+# sing-box-freebsd 日志
+tail -f -n 200 ${HOME}/s-c-f-serv00-*/sing-box.log
+# cloudflared-freebsd 日志
+tail -f -n 200 ${HOME}/s-c-f-serv00-*/cloudflared.log
+
+# 如果一切正常有可能 serv00 服务器重新启动了导致 uuid 自动改变了
+# 可以执行以下命令查看重启后新生成的配置文件信息
 cat ${HOME}/s-c-f-serv00-*/result.txt
 
 # 当然也有可能重启后也可能根本没有启动，那就手动执行脚本吧？
@@ -1934,17 +1962,17 @@ bash s-c-f-serv00.sh
 # 自定义客户端配置中的优选域名或IP和端口可能会起到加速作用
 # 当前客户端配置中的的优选域名为 $VM_WEBSITE 优选域名或IP端口为 $CLOUDFLARED_PORT_VM
 
-# VMESS 订阅1:
-# $HOSTNAME_DOMAIN:$VM_PORT_1 -> $CLOUDFLARED_DOMAIN_VM_1:$CLOUDFLARED_PORT_VM
-$VMESS_LINK_1
+# VLESS 订阅1:
+# $HOSTNAME_DOMAIN:$V_PORT_1 -> $CLOUDFLARED_DOMAIN_V_1:$CLOUDFLARED_PORT_V
+$VLESS_LINK_1
 
 # VMESS 订阅2:
 # $HOSTNAME_DOMAIN:$VM_PORT_2 -> $CLOUDFLARED_DOMAIN_VM_2:$CLOUDFLARED_PORT_VM
 $VMESS_LINK_2
 
-# VMESS 订阅3:
-# $HOSTNAME_DOMAIN:$VM_PORT_3 -> $CLOUDFLARED_DOMAIN_VM_3:$CLOUDFLARED_PORT_VM
-$VMESS_LINK_3
+# TROJAN 订阅3:
+# $HOSTNAME_DOMAIN:$T_PORT_3 -> $CLOUDFLARED_DOMAIN_T_3:$CLOUDFLARED_PORT_T
+$TROJAN_LINK_3
 
 # 执行完成，如果可以请通过 scp 获取客户端配置到本地
 # 本地sing-box客户端配置文件位置 ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/client-sing-box-config.json
@@ -1961,19 +1989,19 @@ UiLgNoD-lIaMtOh
 # 下载 sing-box-freebsd cloudflared-freebsd 配置并启用
 downloadFile() {
     # 下载 freebsd 社区 yuri@FreeBSD.org sing-box 包 sing-box https://freebsd.pkgs.org/14/freebsd-amd64/sing-box-1.9.3.pkg.html
-    #URI="https://pkg.freebsd.org/FreeBSD:14:amd64/latest/All/sing-box-1.9.3.pkg"
-    #FILENAME=$(basename $URI)
-    #wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O $FILENAME
-    #FILEPATH=$(tar tvf $FILENAME | grep bin/sing-box | awk '{print $9}')
-    #tar zxvf $FILENAME
-    #mv -fv .$FILEPATH ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
-    #chmod -v u+x ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
-    #rm -rfv $FILENAME usr
-    # k0baya 版 https://raw.githubusercontent.com/k0baya/sb-for-serv00/main/sing-box
-    URI="https://raw.githubusercontent.com/k0baya/sb-for-serv00/main/sing-box"
+    URI="https://pkg.freebsd.org/FreeBSD:14:amd64/latest/All/sing-box-1.9.3.pkg"
     FILENAME=$(basename $URI)
-    wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
+    wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O $FILENAME
+    FILEPATH=$(tar tvf $FILENAME | grep bin/sing-box | awk '{print $9}')
+    tar zxvf $FILENAME
+    mv -fv .$FILEPATH ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
     chmod -v u+x ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
+    rm -rfv $FILENAME usr
+    # k0baya 版 https://raw.githubusercontent.com/k0baya/sb-for-serv00/main/sing-box
+    #URI="https://raw.githubusercontent.com/k0baya/sb-for-serv00/main/sing-box"
+    #FILENAME=$(basename $URI)
+    #wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c "${URI}" -O ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
+    #chmod -v u+x ${HOME}/s-c-f-serv00-${REPORT_DATE_S}/sing-box-freebsd
 
     # 下载官方 cloundflare https://freebsd.pkgs.org/14/freebsd-amd64/cloudflared-2023.10.0_2.pkg.html
     #URI="https://pkg.freebsd.org/FreeBSD:14:amd64/latest/All/cloudflared-2023.10.0_2.pkg"
