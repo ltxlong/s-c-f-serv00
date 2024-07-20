@@ -1933,9 +1933,9 @@ UiLgNoD-lIaMtOh
     # 有时候？忽然连不上了
     # 执行以下命令查看进程是否启动？
     # sing-box-freebsd 进程
-    ps -ef | grep -v grep | grep sing-box-freebsd
+    ps | grep -v grep | grep sing-box-freebsd
     # cloudflared-freebsd 进程
-    ps -ef | grep -v grep | cloudflared-freebsd
+    ps | grep -v grep | grep cloudflared-freebsd
     
     # 查看一下日志是否有可用信息？
     # sing-box-freebsd 日志
