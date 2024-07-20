@@ -2,7 +2,7 @@
 sing-box + cloudflare + freebsd 支持在 serv00 上搭建 vless(cloudflare) + vmess(cloudflare) + trojan(cloudflare) 3 个节点
 这个脚本会占用 3 个 tcp 端口，如果有其他需求你可以自行爆改本脚本
 
-# clone 本脚本到 serv00 服务器
+# 下载本脚本到 serv00 服务器
     # -1.登录 serv00 服务器并执行命令下载脚本到 serv00 服务器
     rm -fv ${HOME}/s-c-f-serv00.sh
     wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c \
