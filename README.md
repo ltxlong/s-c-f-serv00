@@ -1,7 +1,14 @@
 # s-c-f-serv00
 sing-box + cloudflare + freebsd 支持在 serv00 上搭建 vless(cloudflare) + vmess(cloudflare) + trojan(cloudflare) 3 个节点
-这个脚本会占用 3 个 tcp 端口，如果有其他需求你可以自行爆改本脚本
-
+这个脚本会占用 3 个 tcp 端口，如果有其他需求你可以自行爆改本脚本  
+![Watchers](https://img.shields.io/github/watchers/UiLgNoD-lIaMtOh/s-c-f-serv00) ![Stars](https://img.shields.io/github/stars/UiLgNoD-lIaMtOh/s-c-f-serv00) ![Forks](https://img.shields.io/github/forks/UiLgNoD-lIaMtOh/s-c-f-serv00) ![Vistors](https://visitor-badge.laobi.icu/badge?page_id=UiLgNoD-lIaMtOh.s-c-f-serv00) ![LICENSE](https://img.shields.io/badge/license-CC%20BY--SA%204.0-green.svg)
+<a href="https://star-history.com/#UiLgNoD-lIaMtOh/s-c-f-serv00&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=UiLgNoD-lIaMtOh/s-c-f-serv00&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=UiLgNoD-lIaMtOh/s-c-f-serv00&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=UiLgNoD-lIaMtOh/s-c-f-serv00&type=Date" />
+  </picture>
+</a>  
 # 下载本脚本到 serv00 服务器
     # -1.登录 serv00 服务器并执行命令下载脚本到 serv00 服务器
     rm -fv ${HOME}/s-c-f-serv00.sh
