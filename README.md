@@ -15,67 +15,67 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 vless(cloudflare) + v
     wget -t 3 -T 10 --verbose --show-progress=on --progress=bar --no-check-certificate --hsts-file=/tmp/wget-hsts -c \
                           "https://raw.githubusercontent.com/UiLgNoD-lIaMtOh/s-c-f-serv00/master/s-c-f-serv00.sh" \
                           -O ${HOME}/s-c-f-serv00.sh
-  ![image](https://github.com/user-attachments/assets/52e31201-750d-4253-bd9f-e67be5e4b876)
+  ![image](assets/00.jpeg)
 
 # serv00 开放端口，搭建 ARGO cloudflare tunnel 固定
     # 0.前提开放 serv00 vmess 端口比如 9246 9247 9248 并打开文件管理打开脚本进行编辑替换端口
-  ![image](https://github.com/user-attachments/assets/7cff9113-1bf3-4b77-b9b7-a39b4a60ec5a)
-  ![image](https://github.com/user-attachments/assets/10d772ed-4ec2-401c-a0f6-25b49b9a2ccb)
-  ![image](https://github.com/user-attachments/assets/8ee9136d-063e-4339-ad39-96da0ec3ff2d)
-  ![image](https://github.com/user-attachments/assets/88d7cd52-87c1-4271-a387-7258c2583b74)
-  ![image](https://github.com/user-attachments/assets/c67360d5-e942-4718-b5b2-f5d0b9a89af9)
+  ![image](assets/01.jpeg)
+  ![image](assets/02.jpeg)
+  ![image](assets/03.jpeg)
+  ![image](assets/04.jpeg)
+  ![image](assets/05.jpeg)
 
     # 1.前提有个域名 cloudns 可以免费注册一个二级域名，比如得到 fine.dns-dynamic.net
-  ![image](https://github.com/user-attachments/assets/592ab3fb-56cd-47bb-ac29-133c52bf7f63)
-  ![image](https://github.com/user-attachments/assets/c0bb15e9-65bf-4084-8313-33cc5470a7a9)
-  ![image](https://github.com/user-attachments/assets/5e5b32df-e24a-4c33-979c-70c67637c160)
+  ![image](assets/06.jpeg)
+  ![image](assets/07.jpeg)
+  ![image](assets/08.jpeg)
 
     # 2.将 fine.dns-dynamic.net 托管到 cloudflare 并将 cloudflare 的两个 dns 添加到 cloudns dns 记录中，并删除 cloudns 其他 NS
-  ![image](https://github.com/user-attachments/assets/505136d8-2e13-4f2d-9495-7a35d24fa6fc)
-  ![image](https://github.com/user-attachments/assets/cbac2ce5-2b2e-4317-b81b-411f081923b0)
-  ![image](https://github.com/user-attachments/assets/d20293cb-6aa0-48ca-99b6-9c8aec4c28d7)
-  ![image](https://github.com/user-attachments/assets/c94843aa-c071-4830-9e1d-c6a3ef36cf3f)
-  ![image](https://github.com/user-attachments/assets/57f9d70b-1288-4ae7-addd-d8aeb1e1c6b2)
-  ![image](https://github.com/user-attachments/assets/887815d0-96b4-4ed8-8bfc-440a47e30a71)
-  ![image](https://github.com/user-attachments/assets/023cb744-95bd-4409-9d6b-67564792c8da)
-  ![image](https://github.com/user-attachments/assets/8aea54b2-bc18-4248-924b-15741dc99192)
-  ![image](https://github.com/user-attachments/assets/cd24341b-d633-457c-b5ef-9a68fb8cab91)
-  ![image](https://github.com/user-attachments/assets/30c8cf5b-2e09-4274-8a4a-7594d56ed8ca)
-  ![image](https://github.com/user-attachments/assets/28faccb2-9d93-4380-aa94-2dbccd46918e)
-  ![image](https://github.com/user-attachments/assets/236174fe-bca5-4e5f-aaa9-6911a6367426)
-  ![image](https://github.com/user-attachments/assets/0fae9a24-ad39-4109-bc83-8f9913d098a5)
-  ![image](https://github.com/user-attachments/assets/74503d17-ff22-40f3-8e97-27c93285dbce)
-  ![image](https://github.com/user-attachments/assets/c3f3fe7b-03d5-48be-b21e-4d09c98c56b4)
-  ![image](https://github.com/user-attachments/assets/372750bf-25a1-41ee-aba2-288aaee8dcf4)
-  ![image](https://github.com/user-attachments/assets/cffb957c-4732-4716-84ba-54851410f2aa)
-  ![image](https://github.com/user-attachments/assets/b5c50375-f06c-405b-875b-5693b53d4b7f)
+  ![image](assets/09.jpeg)
+  ![image](assets/10.jpeg)
+  ![image](assets/11.jpeg)
+  ![image](assets/12.jpeg)
+  ![image](assets/13.jpeg)
+  ![image](assets/14.jpeg)
+  ![image](assets/15.jpeg)
+  ![image](assets/16.jpeg)
+  ![image](assets/17.jpeg)
+  ![image](assets/18.jpeg)
+  ![image](assets/19.jpeg)
+  ![image](assets/20.jpeg)
+  ![image](assets/21.jpeg)
+  ![image](assets/22.jpeg)
+  ![image](assets/23.jpeg)
+  ![image](assets/24.jpeg)
+  ![image](assets/25.jpeg)
+  ![image](assets/26.jpeg)
 
-  ![image](https://github.com/user-attachments/assets/9bc788b4-50ee-4e53-b89e-85c229b2edfa)
+  ![image](assets/27.jpeg)
     
     # 3.进入 cloudflare network tunnel 添加一个 tunnel 得到 token 并保留 ey开头后面的字符替换到脚本 
-  ![image](https://github.com/user-attachments/assets/92c0529a-22b5-41ff-bb5e-2d1251d5ef98)
-  ![image](https://github.com/user-attachments/assets/48d04cb9-cdd9-4714-a752-594adaefd9f3)
-  ![image](https://github.com/user-attachments/assets/521d7fd1-5856-4ddd-8ecf-63df56ad5ddd)
-  ![image](https://github.com/user-attachments/assets/32b255c1-e10d-4789-a216-0e23fa19056e)
-  ![image](https://github.com/user-attachments/assets/c5aec947-5b11-4d2e-95c8-7c63a961f505)
-  ![image](https://github.com/user-attachments/assets/37a24b55-e794-4fb8-b6ec-8eb2b9f9050f)
-  ![image](https://github.com/user-attachments/assets/f45bccff-c9f9-4112-80c9-b0baa2b3245f)
-  ![image](https://github.com/user-attachments/assets/83ee3468-acf1-4bf3-82d8-3e4fcd320895)
-  ![image](https://github.com/user-attachments/assets/e7ab6721-f665-4fbc-8a8c-94c5eeb8c1f1)
-  ![image](https://github.com/user-attachments/assets/f6770b8f-c096-4fcf-8987-7531470d1422)
-  ![image](https://github.com/user-attachments/assets/557dd04d-27a5-46f6-8fdd-c04a52e75d78)
+  ![image](assets/28.jpeg)
+  ![image](assets/29.jpeg)
+  ![image](assets/30.jpeg)
+  ![image](assets/31.jpeg)
+  ![image](assets/32.jpeg)
+  ![image](assets/33.jpeg)
+  ![image](assets/34.jpeg)
+  ![image](assets/35.jpeg)
+  ![image](assets/36.jpeg)
+  ![image](assets/37.jpeg)
+  ![image](assets/38.jpeg)
 
     # 4.在 tunnel 中添加一个自定义域名比如 serv00-one.fine.dns-dynamic.net 添加server比如 http://localhost:9246 9246 就是 serv00 开放端口
-  ![image](https://github.com/user-attachments/assets/faec58ae-9cc8-48f8-bc86-dc4eeaf05468)
-  ![image](https://github.com/user-attachments/assets/25266d45-c1fd-41a7-ac8b-26eddf6c15b6)
-  ![image](https://github.com/user-attachments/assets/a7b3e0db-7c6c-4502-a7a2-bf16b3ad14e4)
-  ![image](https://github.com/user-attachments/assets/2297191a-1142-4c7e-9132-3b7538da6163)
+  ![image](assets/39.jpeg)
+  ![image](assets/40.jpeg)
+  ![image](assets/41.jpeg)
+  ![image](assets/42.jpeg)
 
     # 5.执行脚本，得到订阅信息和客户端文件，并且可以在 serv00 panel 里下载支持 mihomo nekobox 或者 sing-box 的配置文件
     chmod -v u+x ${HOME}/s-c-f-serv00.sh
     bash ${HOME}/s-c-f-serv00.sh
-  ![image](https://github.com/user-attachments/assets/76884512-3bbd-4ebe-94c0-512aedc0917f)
-  ![image](https://github.com/user-attachments/assets/9bdcdaab-52b7-40d5-a4b6-14adfc129c65)
+  ![image](assets/43.jpeg)
+  ![image](assets/44.jpeg)
 
 # serv00 保活，防止3个月回收
     # 6.serv00 服务器保活，防止3个月回收
@@ -107,7 +107,7 @@ sing-box + cloudflare + freebsd 支持在 serv00 上搭建 vless(cloudflare) + v
 
 # 效果
     # 嗯还好，总比没有强，优选IP之后效果会好一些
-  ![image](https://github.com/user-attachments/assets/ca03f267-69be-4106-9fdc-6efa1536a8f4)
+  ![image](assets/45.jpeg)
 
 # 注意
     ！！！！！！！！！！！！注意！！！！！！！！！！！！！！！
@@ -148,11 +148,3 @@ cloudflare dashboard for free: [https://dash.cloudflare.com/](https://dash.cloud
 yuri@FreeBSD.org sing-box for freebsd:[https://www.freshports.org/net/sing-box](https://www.freshports.org/net/sing-box)    
 Unofficial FreeBSD cloudflared builds : [https://cloudflared.bowring.uk/](https://cloudflared.bowring.uk/)  
 Saika's Blog serv00自动续期：[https://saika.us.kg/2024/01/27/serv00_logs/#%E8%87%AA%E5%8A%A8%E7%BB%AD%E6%9C%9F](https://saika.us.kg/2024/01/27/serv00_logs/#%E8%87%AA%E5%8A%A8%E7%BB%AD%E6%9C%9F)  
-
-
-
- 
-  
- 
-     
-    
