@@ -28,10 +28,10 @@ then
 fi
 
 # keep argo tunnel
-if ! pgrep -f "cloudflared tunnel" > /dev/null
+if ! pgrep -f "cloudflared-freebsd tunnel" > /dev/null
 then
-  nohup ${WORKDIR}/cloudflared tunnel --edge-ip-version auto --protocol http2 run --token ${ARGO_AUTH} >/dev/null 2>&1 &
-  echo "cloudflared tunnel restarted"
+  nohup ${WORKDIR}/cloudflared-freebsd tunnel --edge-ip-version auto --protocol http2 run --token ${ARGO_AUTH} >/dev/null 2>&1 &
+  echo "cloudflared-freebsd tunnel restarted"
 fi
 
 echo "-----------------------------------------"
